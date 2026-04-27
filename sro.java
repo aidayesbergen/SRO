@@ -5,10 +5,10 @@ import java.time.format.DateTimeFormatter;
 
 public class sro {
 
-    // лог файл аты
+    // имя файла
     private static final String FILE_NAME = "system.log";
 
-    // уақыт форматы
+    // формат времени
     private static final DateTimeFormatter formatter =
             DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 
@@ -16,17 +16,20 @@ public class sro {
     public static void writeLog(String action){
 
         String time = LocalDateTime.now().format(formatter);
+        String log = time + " | " + action;
 
-        try(FileWriter writer = new FileWriter(FILE_NAME,true)){
-
-            writer.write(time + " | " + action + "\n");
-
+        // запись в файл
+        try(FileWriter writer = new FileWriter(FILE_NAME, true)){
+            writer.write(log + "\n");
         }catch(IOException e){
             System.out.println("Log error: " + e.getMessage());
         }
+
+        // вывод в терминал
+        System.out.println(log);
     }
 
-    // ===== TEST =====
+    // ===== MAIN =====
     public static void main(String[] args) {
 
         writeLog("User LOGIN");
